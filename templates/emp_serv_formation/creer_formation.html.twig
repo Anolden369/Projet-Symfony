@@ -1,0 +1,145 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spike Free</title>
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
+  <link rel="stylesheet" href="../assets/css/styles.min.css" />
+</head>
+<body>
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div class="scroll-sidebar" data-simplebar>
+        <div class="d-flex mb-4 align-items-center justify-content-between">
+            <a href="index.html" class="text-nowrap logo-img ms-0 ms-md-1">
+              <img src="../assets/images/logos/dark-logo.svg" width="180" alt="">
+            </a>
+            <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+              <i class="ti ti-x fs-8"></i>
+            </div>
+        </div>
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <a href="{{ path('app_aff_serv') }}" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                <img src="../assets/images/logos/image002.png" width="250" alt="">
+              </a>
+          <ul id="sidebarnav" class="mb-4 pb-2">
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-5"></i>
+              <span class="hide-menu">Accueil</span>
+            </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link sidebar-link primary-hover-bg"
+                  href="{{ path('app_aff_serv') }}"
+                  aria-expanded="false"
+                >
+                  <span class="aside-icon p-2 bg-light-primary rounded-3">
+                    <i class="ti ti-file-description fs-7 text-primary"></i>
+                  </span>
+                  <span class="hide-menu ms-2 ps-1">Les Formations</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link sidebar-link success-hover-bg"
+                  href="{{ path('aff_serv_les_inscription') }}"
+                  aria-expanded="false"
+                >
+                  <span class="aside-icon p-2 bg-light-success rounded-3">
+                    <i class="ti ti-cards fs-7 text-success"></i>
+                  </span>
+                  <span class="hide-menu ms-2 ps-1">Les inscriptions</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link sidebar-link indigo-hover-bg"
+                  href="{{ path('aff_creer_form') }}"
+                  aria-expanded="false"
+                >
+                  <span class="aside-icon p-2 bg-light-indigo rounded-3">
+                    <i class="ti ti-user-plus fs-7 text-indigo"></i>
+                  </span>
+                  <span class="hide-menu ms-2 ps-1">Ajout Formations</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link sidebar-link warning-hover-bg"
+                  href="{{ path('aff_creer_form') }}"
+                  aria-expanded="false"
+                >
+                  <span class="aside-icon p-2 bg-light-warning rounded-3">
+                    <i class="ti ti-article fs-7 text-warning"></i>
+                  </span>
+                  <span class="hide-menu ms-2 ps-1">Ajout Produits</span>
+                </a>
+              </li>
+        </nav>
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
+  <!--  Body -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <div
+      class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <div class="row justify-content-center w-100">
+          <div class="col-md-8 col-lg-6 col-xxl-3">
+            <div class="card mb-0">
+              <div class="card-body">
+                <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                  <img src="../assets/images/logos/image002.png" width="250" alt="">
+                </a>
+                <p class="text-center">Créer une Formations</p>
+                {# Utilisation du formulaire Symfony pour la gestion de la connexion #}
+                <form method="POST" action="{{ path('app_ajouter_formation') }}">
+                  {{ form_start(form) }}
+                  <div class="form-group">
+                    <label for="login" class="form-label">Date de début : </label><br>
+                    {{ form_widget(form.dateDebut, {'attr': {'class': 'form-control', 'placeholder': 'Date de début'}}) }}
+                  </div><br>
+                  <div class="form-group">
+                    <label for="mdp" class="form-label">Nombre d'heures : </label>
+                    {{ form_widget(form.nbreHeures, {'attr': {'class': 'form-control', 'placeholder': 'Nbre heures'}}) }}
+                  </div><br><br>
+                  <div class="form-group">
+                    <label for="mdp" class="form-label">Departement : </label>
+                    {{ form_widget(form.departement, {'attr': {'class': 'form-control', 'placeholder': 'Departement'}}) }}
+                  </div><br><br>
+                  <div class="form-group">
+                    <label for="mdp" class="form-label">Produit : </label>
+                    {{ form_widget(form.produit, {'attr': {'class': 'form-control'}}) }}
+                </div><br><br>                     
+                  <div class="form-group">
+                    {{ form_widget(form.ajouter, {'attr': {'class': 'btn btn-primary w-100 fs-4 mb-4 rounded-2'}}) }}
+                  </div>
+                  {{ form_end(form) }}
+                </form>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
+{% endblock %}

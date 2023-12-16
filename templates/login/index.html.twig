@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../assets/css/styles.min.css" />
+  <style>
+    /* Ajout de styles pour gérer l'espacement entre le label et le champ de saisie */
+    .form-label {
+      margin-bottom: 5px; /* Ajoute une marge basse entre le label et le champ de saisie */
+    }
+  </style>
+</head>
+
+<body>
+  <!--  Body -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <div
+      class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <div class="row justify-content-center w-100">
+          <div class="col-md-8 col-lg-6 col-xxl-3">
+            <div class="card mb-0">
+              <div class="card-body">
+                <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                  <img src="../assets/images/logos/image002.png" width="250" alt="">
+                </a>
+                <p class="text-center">Gestion des Formations</p>
+                <form method="POST" action="{{ path('app_login_ajouter') }}">
+                  {{ form_start(form) }}
+                  <div class="form-group">
+                    <label for="login" class="form-label">Login :</label><br>
+                    {{ form_widget(form.login, {'attr': {'class': 'form-control', 'placeholder': 'Login'}}) }}
+                  </div><br>
+                  <div class="form-group">
+                    <label for="mdp" class="form-label">Mot de passe :</label>
+                    {{ form_widget(form.mdp, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+                  </div><br><br>
+                      {% if message is not empty %}
+                          <div class="alert alert-danger" role="alert">
+                              {{ message }}
+                          </div>
+                      {% endif %}
+                  <div class="form-group">
+                    {{ form_widget(form.Identifier, {'attr': {'class': 'btn btn-primary w-100 fs-4 mb-4 rounded-2'}}) }}
+                  </div>
+                  {{ form_end(form) }}
+                </form>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
+{% endblock %}

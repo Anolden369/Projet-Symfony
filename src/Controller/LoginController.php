@@ -11,24 +11,29 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Psr\Log\LoggerInterface;
 
 class LoginController extends AbstractController
 {
-    #[Route('/login', name: 'app_login')]
+    #[Route('/', name: 'app_login')]
     public function index(): Response
     {
         $login = new Employe();
+        $message = "";
         $form = $this->createForm(LoginType::class, $login);
 
         return $this->render('login/index.html.twig', [
             'form' => $form->createView(),
+            'message' => $message,
         ]);
     }
 
-    #[Route('/loginEmploye', name: 'app_login_ajouter')]
-    public function login(Request $request, ManagerRegistry $doctrine, SessionInterface $session)
+    #[Route('/loginEmploye', name: 'app_login_connexion')]
+    public function login(Request $request, ManagerRegistry $doctrine, SessionInterface $session, LoggerInterface $logger)
     {
+        
         $session->remove('idEmploye');
+        $session->remove('employe');
 
         $login = new Employe();
         $form = $this->createForm(LoginType::class, $login);
@@ -38,15 +43,17 @@ class LoginController extends AbstractController
     
         if ($form->isSubmitted() && $form->isValid()) {
             $login = $form->getData();
-            $loginFormulaire = $login->getLogin();
-            $passwordFormulaire = $login->getMdp();
+            $loginForm = $login->getLogin();
+            $mdpForm = $login->getMdp();
+            $mdph = MD5($mdpForm .'15');
     
             $entityManager = $doctrine->getManager();
-            $unEmploye = $entityManager->getRepository(Employe::class)->findOneBy(['login' => $loginFormulaire]);
+            $unEmploye = $entityManager->getRepository(Employe::class)->findOneBy(['login' => $loginForm, 'mdp' => $mdph]);
     
-            if ($unEmploye && $unEmploye->getMdp() === $passwordFormulaire) {
-                $session = new Session();
+            if ($unEmploye) {
                 $session->set('idEmploye', $unEmploye->getId());
+                $session->set('employe', $unEmploye);
+                $logger->info('L\'employé ' . $unEmploye->getLogin() . ' s\'est connecté ! Id : '.$unEmploye->getId().' Nom : '. $unEmploye->getNom(). " Prénom : " . $unEmploye->getPrenom(). " Statut : ". $unEmploye->getStatut());
                 if ($unEmploye->getStatut() == 0) {
                     return $this->redirectToRoute('app_afflambda');
                 } else if($unEmploye->getStatut() == 1){
@@ -56,25 +63,10 @@ class LoginController extends AbstractController
                 $message = 'Login ou mot de passe incorrect.';
             }
             
-        } 
+        }
         return $this->render('login/index.html.twig', [
             'form' => $form->createView(),
             'message' => $message,
         ]);
     }
 }
-
-
-// CE QUE JE DOIS FAIRE 
-
-
-// Ne pas s'inscrire deux fois une personne à la meme formation
-// verifier la variable de session avant chaque chargement de la page
-// pour le user, voir uniquement les formations en cours et pas ceux acceptée ou refusée
-
-
-//POUR LA SESSION
-// Je récupère l'id de la session
-// si s'il existe un id pour une session
-// j'accède au contenu ou à la page
-// sinon je sors et je retourne à la page de login de connexion

@@ -55,7 +55,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link sidebar-link success-hover-bg"
-                  href="{{ path('aff_serv_les_inscription') }}"
+                  href="{{ path('app_serv_les_inscriptions') }}"
                   aria-expanded="false"
                 >
                   <span class="aside-icon p-2 bg-light-success rounded-3">
@@ -67,7 +67,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link sidebar-link indigo-hover-bg"
-                  href="{{ path('aff_creer_form') }}"
+                  href="{{ path('app_creer_form') }}"
                   aria-expanded="false"
                 >
                   <span class="aside-icon p-2 bg-light-indigo rounded-3">
@@ -79,7 +79,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link sidebar-link warning-hover-bg"
-                  href="{{ path('aff_creer_form') }}"
+                  href="{{ path('app_ajouter_produit') }}"
                   aria-expanded="false"
                 >
                   <span class="aside-icon p-2 bg-light-warning rounded-3">
@@ -113,7 +113,7 @@
           </ul>
           <div class="navbar-collapse justify-content-end px-8" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                <a href="{{ path('app_login_ajouter') }}" class="btn btn-outline-primary mx-3 mt-2 d-block shadow-none">Deconnexion</a>
+                <a href="{{ path('app_login_connexion') }}" class="btn btn-outline-primary mx-3 mt-2 d-block shadow-none">Deconnexion</a>
             </ul>
           </div>
         </nav>
@@ -132,44 +132,47 @@
                         <div class="card w-100">
                             <div class="card-body p-12">
                                 <div class="d-flex mb-4 justify-content-between align-items-center">
-                                    <h5 class="mb-0 fw-bold">Liste de mes inscriptions </h5>
+                                    <h5 class="mb-0 fw-bold">Liste des inscriptions </h5>
                                     <!-- Ajouter un bouton ou des actions supplémentaires ici si nécessaire -->
                                 </div>
                                 <div class="table-responsive" data-simplebar>
+                                  {% for type, messages in app.flashes %}
+                                      {% for message in messages %}
+                                          <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+                                              {{ message }}
+                                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                          </div>
+                                      {% endfor %}
+                                  {% endfor %}
                                     <table class="table table-bordered table-lg align-middle text-nowrap">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
+                                                <th>Numéro Formation</th>
+                                                <th>Nom Formation</th>
                                                 <th>Statut</th>
                                                 <th>Nom Employe</th>
                                                 <th>Prenom Employe</th>
-                                                <th>Formation</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for inscription in inscriptions %}
                                                 <tr>
-                                                    <td>{{ inscription.id }}</td>
+                                                  <td>n°{{ inscription.formation.id }}</td>
+                                                    <td>{{ inscription.formation.nom }}</td>
                                                     <td>{{ inscription.statut }}</td>
                                                     <td>{{ inscription.employe.nom }}</td>
                                                     <td>{{ inscription.employe.prenom }}</td>
-                                                    <td>n°{{ inscription.formation.id }}</td>
+                                                    
                                                     <td>
                                                       <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                                                         <a href="{{path('app_acceptation_inscription', {'idInscription': inscription.id})}}" class="btn btn-outline-success mx-3 mt-2 d-block shadow-none">Acceptée</a>
                                                       </ul>
-                                                    </td>
-                                                    <td>
                                                       <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                                                         <a href="{{path('app_refusee_inscription', {'idInscription': inscription.id})}}" class="btn btn-outline-danger mx-3 mt-2 d-block shadow-none">Refusée</a>
                                                       </ul>
                                                     </td>
-                                                    <td>
-                                                      <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                                                        <a href="{{path('app_inscription_suppr', {'idInscription': inscription.id})}}" class="btn btn-outline-info mx-3 mt-2 d-block shadow-none">Retirer</a>
-                                                      </ul>
-                                                    </td>
+                                                    
                                                 </tr>
                                             {% endfor %}
                                         </tbody>

@@ -54,7 +54,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link sidebar-link success-hover-bg"
-                  href="{{ path('aff_serv_les_inscription') }}"
+                  href="{{ path('app_serv_les_inscriptions') }}"
                   aria-expanded="false"
                 >
                   <span class="aside-icon p-2 bg-light-success rounded-3">
@@ -66,7 +66,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link sidebar-link indigo-hover-bg"
-                  href="{{ path('aff_creer_form') }}"
+                  href="{{ path('app_creer_form') }}"
                   aria-expanded="false"
                 >
                   <span class="aside-icon p-2 bg-light-indigo rounded-3">
@@ -78,7 +78,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link sidebar-link warning-hover-bg"
-                  href="{{ path('aff_creer_form') }}"
+                  href="{{ path('app_ajouter_produit') }}"
                   aria-expanded="false"
                 >
                   <span class="aside-icon p-2 bg-light-warning rounded-3">
@@ -112,7 +112,7 @@
           </ul>
           <div class="navbar-collapse justify-content-end px-8" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                <a href="{{ path('app_login_ajouter') }}" class="btn btn-outline-primary mx-3 mt-2 d-block shadow-none">Deconnexion</a>
+                <a href="{{ path('app_login_connexion') }}" class="btn btn-outline-primary mx-3 mt-2 d-block shadow-none">Deconnexion</a>
             </ul>
           </div>
         </nav>
@@ -135,15 +135,24 @@
                                     <!-- Ajouter un bouton ou des actions supplémentaires ici si nécessaire -->
                                     <div class="navbar-collapse justify-content-end px-8" id="navbarNav">
                                       <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                                          <a href="{{ path('aff_creer_form') }}" class="btn btn-outline-success mx-3 mt-2 d-block shadow-none">Créer</a>
+                                          <a href="{{ path('app_creer_form') }}" class="btn btn-outline-success mx-3 mt-2 d-block shadow-none">Créer</a>
                                       </ul>
                                     </div>
                                 </div>
+                                {% for type, messages in app.flashes %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+                                            {{ message }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    {% endfor %}
+                                {% endfor %}
                                 <div class="table-responsive" data-simplebar>
                                     <table class="table table-bordered table-lg align-middle text-nowrap">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
+                                                <th>Nom</th>
                                                 <th>Date</th>
                                                 <th>Nombre d'heures</th>
                                                 <th>Département</th>
@@ -155,6 +164,7 @@
                                             {% for formation in formations %}
                                                 <tr>
                                                     <td>{{ formation.id }}</td>
+                                                    <td>{{ formation.nom }}</td>
                                                     <td>{{ formation.dateDebut|date('d-m-Y') }}</td>
                                                     <td>{{ formation.nbreHeures }} h</td>
                                                     <td>{{ formation.departement }}</td>
@@ -186,4 +196,4 @@
 </body>
 
 </html>
-        {% endblock %}
+{% endblock %}

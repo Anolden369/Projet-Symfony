@@ -17,6 +17,9 @@ class EmpServFormationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('nom', TextType::class, [
+                'attr' => ['class' => 'form-control', 'placeholder' => 'Nom formation']
+            ])
             ->add('dateDebut', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => true,

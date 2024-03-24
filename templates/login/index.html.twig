@@ -31,7 +31,15 @@
                   <img src="../assets/images/logos/image002.png" width="250" alt="">
                 </a>
                 <p class="text-center">Gestion des Formations</p>
-                <form method="POST" action="{{ path('app_login_ajouter') }}">
+                {% for type, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                <form method="POST" action="{{ path('app_login_connexion') }}">
                   {{ form_start(form) }}
                   <div class="form-group">
                     <label for="login" class="form-label">Login :</label><br>

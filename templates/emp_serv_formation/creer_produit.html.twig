@@ -102,31 +102,21 @@
             <div class="card mb-0">
               <div class="card-body">
                 <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                  <img src="../assets/images/logos/image002.png" width="150" alt="">
+                  <img src="../assets/images/logos/image002.png" width="250" alt="">
                 </a>
-                <p class="text-center">Créer une Formation</p>
+                <p class="text-center">Créer un Produit</p>
                 {# Utilisation du formulaire Symfony pour la gestion de la connexion #}
-                <form method="POST" action="{{ path('app_ajouter_formation') }}">
+                <form method="POST" action="{{ path('app_ajouter_produit') }}">
                   {{ form_start(form) }}
                   <div class="form-group">
-                    
-                    <label for="mdp" class="form-label">Nom de la formation : </label> <br>
-                    {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom de la formation'}}) }}
-                    <br>
-                    <label for="login" class="form-label">Date de début : </label><br>
-                    {{ form_widget(form.dateDebut, {'attr': {'class': 'form-control', 'placeholder': 'Date de début'}}) }}
-                    <br>
-                    <label for="mdp" class="form-label">Nombre d'heures : </label><br>
-                    {{ form_widget(form.nbreHeures, {'attr': {'class': 'form-control', 'placeholder': 'Nbre heures'}}) }}
-                    <br>
-                    <label for="mdp" class="form-label">Departement : </label><br>
-                    {{ form_widget(form.departement, {'attr': {'class': 'form-control', 'placeholder': 'Departement'}}) }}
-                    <br>
-                    <label for="mdp" class="form-label">Produit : </label><br>
-                    {{ form_widget(form.produit, {'attr': {'class': 'form-control'}}) }}               
-                    <br>
+                    <div class="form-group">
+                      <label for="mdp" class="form-label">Nom du produit : </label>
+                      {{ form_widget(form.libelle, {'attr': {'class': 'form-control', 'placeholder': 'Nom du produit'}}) }}
+                    </div><br>
+                </div><br>                    
+                  <div class="form-group">
                     {{ form_widget(form.ajouter, {'attr': {'class': 'btn btn-primary w-100 fs-4 mb-4 rounded-2'}}) }}
-                  
+                  </div>
                   {{ form_end(form) }}
                 </form>
                 

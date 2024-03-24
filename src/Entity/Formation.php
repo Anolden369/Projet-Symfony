@@ -14,6 +14,9 @@ class Formation
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 25, nullable: true)]
+    private ?string $nom = null;
+
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateDebut = null;
 
@@ -76,6 +79,18 @@ class Formation
     public function setProduit(?Produit $produit): static
     {
         $this->produit = $produit;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): static
+    {
+        $this->nom = $nom;
 
         return $this;
     }

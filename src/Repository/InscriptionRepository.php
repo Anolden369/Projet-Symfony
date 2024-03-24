@@ -21,6 +21,32 @@ class InscriptionRepository extends ServiceEntityRepository
         parent::__construct($registry, Inscription::class);
     }
 
+    public function rechInscriptionsEmploye($nom, $prenom): array
+    {
+        return $this->createQueryBuilder('i')
+        ->join('i.employe','e')
+        ->join('i.formation', 'f')
+        ->join('f.produit', 'p')
+        ->andWhere('e.nom= :val1')
+        ->andWhere('e.prenom= :val2')
+        ->setParameter('val1',$nom)
+        ->setParameter('val2',$prenom)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
+    public function rechInscriptionsParProduit($libelleProduit): array
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.formation', 'f')
+            ->join('f.produit', 'p')
+            ->andWhere('p.libelle = :libelleProduit')
+            ->setParameter('libelleProduit', $libelleProduit)
+            ->getQuery()
+            ->getResult();
+    }
+    
 //    /**
 //     * @return Inscription[] Returns an array of Inscription objects
 //     */
@@ -45,4 +71,5 @@ class InscriptionRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 }

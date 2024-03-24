@@ -20,6 +20,22 @@ class FormationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Formation::class);
     }
+    public function findFormationsNonInscritesPourEmploye($employe)
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        // Sous-requête pour récupérer les IDs des formations auxquelles l'employé est déjà inscrit
+        $subQuery = $this->_em->createQueryBuilder()
+            ->select('IDENTITY(i.formation)')
+            ->from('App\Entity\Inscription', 'i')
+            ->where('i.employe = :employe');
+
+        // Utilisation de NOT IN pour exclure les formations auxquelles l'employé est déjà inscrit
+        $qb->andWhere($qb->expr()->notIn('f.id', $subQuery->getDQL()))
+            ->setParameter('employe', $employe);
+
+        return $qb->getQuery()->getResult();
+    }
 
 //    /**
 //     * @return Formation[] Returns an array of Formation objects

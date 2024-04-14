@@ -43,14 +43,7 @@ class EmpServFormationController extends AbstractController
         $employe->getNom();
         $employe->getPrenom();
         $formations = $doctrine->getManager()->getRepository(Formation::class)->findAll();
-        foreach($formations as $uneFormation)
-        {
-            $uneFormation->getId();
-            $uneFormation->getDateDebut()->format('Y-m-d');
-            $uneFormation->getNbreHeures();
-            $uneFormation->getDepartement();
-            $uneFormation->getProduit();
-        }
+
         if(!$formations)
         {
             $message = "Pas de formations";
